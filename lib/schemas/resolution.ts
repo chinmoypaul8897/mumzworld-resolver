@@ -68,9 +68,9 @@ export type ResolutionMeta = z.infer<typeof ResolutionMetaSchema>;
  */
 export const ResolutionSchema = z.object({
   headline: z.string().min(1).max(120),
-  immediate_action: z.string().max(300).nullable(),
+  immediate_action: z.string().max(500).nullable(),
   what_we_did: z.array(WhatWeDidItemSchema).max(5),
-  what_happens_next: z.string().min(1).max(200),
+  what_happens_next: z.string().min(1).max(300),
   talk_to_human_cta: TalkToHumanCtaSchema,
   safety_warning: ResolutionSafetyWarningSchema.nullable(),
   language: z.enum(["en", "ar"]),
@@ -97,9 +97,9 @@ export type Resolution = z.infer<typeof ResolutionSchema>;
  */
 export const ResolutionModelOutputSchema = z.object({
   headline: z.string().min(1).max(120),
-  immediate_action: z.string().max(300).nullable(),
+  immediate_action: z.string().max(500).nullable(),
   what_we_did: z.array(WhatWeDidItemSchema).max(5),
-  what_happens_next: z.string().min(1).max(200),
+  what_happens_next: z.string().min(1).max(300),
   talk_to_human_cta: TalkToHumanCtaSchema,
   safety_warning: ResolutionSafetyWarningSchema.nullable(),
 });
