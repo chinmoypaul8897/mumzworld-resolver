@@ -62,10 +62,28 @@ function tryParseJson(text: string): { ok: boolean; value?: unknown; error?: str
   }
   const jsonText = candidate.slice(firstBrace, lastBrace + 1);
 
+  // First attempt: strict parse
   try {
     return { ok: true, value: JSON.parse(jsonText) };
   } catch (err) {
-    return { ok: false, error: (err as Error).message };
+    // Second attempt: gpt-oss-style quote-mixing repair.
+    // Observed failure modes:
+    //   "key':value         (open double, close single)
+    //   "key\":value        (escaped double in unescaped position)
+    //   'key':'value'       (single-quoted keys/values)
+    // Strategy: replace all single quotes that are acting as JSON
+    // string delimiters with double quotes, and remove stray backslashes
+    // before quotes. This is lossy for English contractions inside
+    // values, but those are rare in our schemas (which use enums and
+    // short labels, not free prose with apostrophes).
+    const repaired = jsonText
+      .replace(/\\"/g, '"') // unescape stray escaped quotes
+      .replace(/'/g, '"'); // single -> double everywhere
+    try {
+      return { ok: true, value: JSON.parse(repaired) };
+    } catch (err2) {
+      return { ok: false, error: (err as Error).message };
+    }
   }
 }
 
