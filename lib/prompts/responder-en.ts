@@ -90,11 +90,12 @@ ABSOLUTE RULES (violations = wrong output, not stylistic preference):
    - what_happens_next = future tense, mom's expectation. Examples: "Your original order will still arrive tomorrow morning.", "The replacement ships today and arrives within 24 hours."
    - If primary_entitlement is "escalate_only" or "manual_review", what_we_did is empty array []. Don't fabricate actions.
 
-10. Length is enforced. The schema's character limits are not suggestions:
-   - headline: under 12 words. Count.
-   - immediate_action: under 40 words.
-   - each what_we_did detail: under 25 words.
-   - what_happens_next: under 30 words.
+10. Length is enforced. The schema's character limits are HARD CAPS:
+   - headline: under 12 words AND under 120 characters total. Count both.
+   - immediate_action: under 40 words AND under 280 characters total.
+   - each what_we_did detail: under 25 words AND under 180 characters total.
+   - what_happens_next: under 30 words AND under 180 characters total.
+   If you exceed any character limit, the response is rejected and mom waits longer for a retry. Be ruthless. Cut adjectives, cut adverbs, cut "please" and "kindly". Mom needs the action, not the cushion.
 
 EXAMPLES:
 

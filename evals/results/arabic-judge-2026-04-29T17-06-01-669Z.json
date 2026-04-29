@@ -1,0 +1,47 @@
+[
+  {
+    "case_id": "E3",
+    "mom_message": "وصلت الملابس بس مقاسها غلط، طلبت ٦-٩ شهور وبعتولي ٠-٣. بدي بدلها",
+    "ai_response_headline": "الملابس الخطأ — البديل في الطريق.",
+    "ai_response_full": "{\n  \"headline\": \"الملابس الخطأ — البديل في الطريق.\",\n  \"immediate_action\": \"خلي الملابس اللي وصلتك جاهزة، راح نرتب استلامها خلال 48 ساعة.\",\n  \"what_we_did\": [\n    {\n      \"label\": \"اعتماد البديل\",\n      \"detail\": \"طلبت مقاس ٦-٩ شهور، راح نرسل لكِ البديل.\"\n    }\n  ],\n  \"what_happens_next\": \"توقعي استلام الملابس الصحيحة خلال 48 ساعة.\"\n}",
+    "total_score": 4,
+    "max_score": 4,
+    "scores": {
+      "dialect_match": 1,
+      "register_match": 1,
+      "mom_natural": 1,
+      "action_clear": 1,
+      "reasoning_en": "The AI responded in a Gulf dialect, matching the mother's informal tone. The response is natural and conversational, providing clear next steps for the mother regarding the exchange process."
+    }
+  },
+  {
+    "case_id": "A4",
+    "mom_message": "العربيه ما فيها ايش بس الكرتون كان مفتوح",
+    "ai_response_headline": "لا تستخدمي المنتج — البديل اليوم.",
+    "ai_response_full": "{\n  \"headline\": \"لا تستخدمي المنتج — البديل اليوم.\",\n  \"immediate_action\": \"لا تستخدمي المنتج بسبب فتح الكرتون. هذا قد يعرضه للتلوث.\",\n  \"what_we_did\": [\n    {\n      \"label\": \"اعتماد البديل\",\n      \"detail\": \"سنرسل لكِ منتج بديل اليوم.\"\n    }\n  ],\n  \"what_happens_next\": \"توقعي وصول البديل اليوم. إذا كنتِ بحاجة لإلغاء الطلب، اضغطي تحت.\"\n}",
+    "total_score": 1,
+    "max_score": 4,
+    "scores": {
+      "dialect_match": 0,
+      "register_match": 0,
+      "mom_natural": 0,
+      "action_clear": 1,
+      "reasoning_en": "The AI responded in formal MSA instead of the Gulf dialect used by the mother. The tone is stiff and lacks the natural conversational flow expected in a casual context. However, the next steps are clear and direct."
+    }
+  },
+  {
+    "case_id": "S3",
+    "mom_message": "اللي وصل ديتول مع طعام الطفل والكرتون مكسور",
+    "ai_response_headline": "لا تستخدمي ديتول — البديل في الطريق.",
+    "ai_response_full": "{\n  \"headline\": \"لا تستخدمي ديتول — البديل في الطريق.\",\n  \"immediate_action\": \"لا تستخدمي ديتول حتى تتأكدي من سلامته. الكرتون المكسور قد يسبب تلوث.\",\n  \"what_we_did\": [\n    {\n      \"label\": \"تنبيه قسم السلامة\",\n      \"detail\": \"تم تقييم حالة الكرتون المكسور.\"\n    },\n    {\n      \"label\": \"اعتماد البديل\",\n      \"detail\": \"ديتول جديد يُشحن اليوم بشكل عاجل، مجاناً.\"\n    }\n  ],\n  \"what_happens_next\": \"سنرتب استلام ديتول المعطوب مع توصيل البديل. اتوقعي وصوله اليوم.\"\n}",
+    "total_score": 2,
+    "max_score": 4,
+    "scores": {
+      "dialect_match": 0,
+      "register_match": 1,
+      "mom_natural": 0,
+      "action_clear": 1,
+      "reasoning_en": "The AI responded in formal MSA instead of the Gulf dialect used by the mother. While the response was polished and clear, it felt robotic and lacked a natural conversational tone that a mother would expect."
+    }
+  }
+]
