@@ -9,8 +9,13 @@ dotenv.config({ path: ".env.local" });
  * Returns the raw text content of the assistant's reply.
  * Parsing JSON, validating against schemas, retrying on bad output —
  * all happens at the harness/orchestrator layer, not here.
+ *
+ * Defaults:
+ * - max_tokens: 3000 (raised from 1500 after responder R2 burned its
+ *   ceiling on reasoning tokens during a safety-critical case).
+ * - reasoning.effort: "low" (caps internal thinking budget on
+ *   reasoning models like gpt-oss; ignored elsewhere).
  */
-
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export interface ChatMessage {
@@ -30,8 +35,14 @@ export interface ChatRequest {
    * this is a hint, not a hard guarantee.
    */
   response_format_json?: boolean;
+  /**
+   * Caps how many tokens reasoning models burn on internal thinking
+   * before producing visible output. "low" frees ~60% of reasoning
+   * budget for actual JSON output on gpt-oss. Models that don't
+   * support reasoning_effort silently ignore it.
+   */
+  reasoning_effort?: "low" | "medium" | "high";
 }
-
 export interface ChatResponse {
   text: string;
   raw_text: string;          // the unstripped original (for debugging)
@@ -60,12 +71,12 @@ async function callOnce(req: ChatRequest, apiKey: string): Promise<Response> {
     model: req.model,
     messages: req.messages,
     temperature: req.temperature ?? 0.2,
-    max_tokens: req.max_tokens ?? 1500,
+    max_tokens: req.max_tokens ?? 3000,
+    reasoning: { effort: req.reasoning_effort ?? "low" },
   };
   if (req.response_format_json) {
     body.response_format = { type: "json_object" };
   }
-
   return fetch(OPENROUTER_URL, {
     method: "POST",
     headers: {

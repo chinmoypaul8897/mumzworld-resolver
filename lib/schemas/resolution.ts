@@ -10,7 +10,6 @@ export const WhatWeDidItemSchema = z.object({
   label: z.string().min(1).max(60),
   detail: z.string().min(1).max(200),
 });
-
 export type WhatWeDidItem = z.infer<typeof WhatWeDidItemSchema>;
 
 /**
@@ -27,7 +26,6 @@ export const TalkToHumanCtaSchema = z.object({
   label: z.string().min(1).max(50),
   context_bundle: z.record(z.string(), z.unknown()),
 });
-
 export type TalkToHumanCta = z.infer<typeof TalkToHumanCtaSchema>;
 
 /**
@@ -42,7 +40,6 @@ export const ResolutionSafetyWarningSchema = z.object({
   severity: SafetySeveritySchema,
   message: z.string().min(1),
 });
-
 export type ResolutionSafetyWarning = z.infer<typeof ResolutionSafetyWarningSchema>;
 
 /**
@@ -54,7 +51,6 @@ export const ResolutionMetaSchema = z.object({
   used_human_escalation: z.boolean(),
   response_generation_ms: z.number().nonnegative().optional(),
 });
-
 export type ResolutionMeta = z.infer<typeof ResolutionMetaSchema>;
 
 /**
@@ -80,5 +76,31 @@ export const ResolutionSchema = z.object({
   language: z.enum(["en", "ar"]),
   meta: ResolutionMetaSchema,
 });
-
 export type Resolution = z.infer<typeof ResolutionSchema>;
+
+/**
+ * What the responder LLM actually produces.
+ *
+ * Drops `language` and `meta` from the full Resolution.
+ * - `language` is determined by which prompt was called (responder-en
+ *   vs responder-ar), not by the model's self-report. The engine
+ *   stamps it deterministically.
+ * - `meta` is instrumentation: classification_confidence comes from
+ *   the classifier output, used_human_escalation is derivable from
+ *   policy.always_escalate || classification.needs_human,
+ *   response_generation_ms is measured by the engine. Asking the
+ *   model to echo these invites typos and hallucination (observed in
+ *   responder v1 R5 where the model wrote "used_human_escalation{").
+ *
+ * After the model returns this shape, the engine adds language + meta
+ * to produce the full Resolution.
+ */
+export const ResolutionModelOutputSchema = z.object({
+  headline: z.string().min(1).max(120),
+  immediate_action: z.string().max(300).nullable(),
+  what_we_did: z.array(WhatWeDidItemSchema).max(5),
+  what_happens_next: z.string().min(1).max(200),
+  talk_to_human_cta: TalkToHumanCtaSchema,
+  safety_warning: ResolutionSafetyWarningSchema.nullable(),
+});
+export type ResolutionModelOutput = z.infer<typeof ResolutionModelOutputSchema>;
