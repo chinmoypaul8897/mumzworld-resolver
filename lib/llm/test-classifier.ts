@@ -51,14 +51,12 @@ const inputs: TestInput[] = [
 ];
 
 const models = [
-  "openai/gpt-oss-120b:free",
-  "google/gemma-4-31b-it:free",
-  "minimax/minimax-m2.5:free",
+     "openai/gpt-oss-120b:free",
 ];
 
 async function main() {
   const prompt: PromptUnderTest = {
-    name: "classifier-v1",
+    name: "classifier-v2",
     system_message: CLASSIFIER_SYSTEM_MESSAGE,
     user_template: classifierUserTemplate,
     response_format_json: true,
