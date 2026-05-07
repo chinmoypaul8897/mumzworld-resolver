@@ -391,7 +391,7 @@ For prompt iterations specifically, please follow the convention used in commit 
 
 ## License
 
-[MIT](https://opensource.org/licenses/MIT). If a `LICENSE` file is not present in the repo root, treat this README's MIT designation as authoritative.
+[MIT](LICENSE) © 2026 Chinmoy Paul. See [`LICENSE`](LICENSE) for the full text.
 
 ---
 
